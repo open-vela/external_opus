@@ -1,5 +1,4 @@
 Doxyfile
-Makefile
 Makefile.in
 TAGS
 aclocal.m4
@@ -8,7 +7,6 @@ autom4te.cache
 *.kdevses
 compile
 config.guess
-config.h
 config.h.in
 config.log
 config.status
@@ -88,3 +86,6 @@ src/x64
 .vs/
 .vscode/
 CMakeSettings.json
+.built
+.depend
+Make.dep
