@@ -11,7 +11,7 @@
 /* #undef CUSTOM_MODES */
 
 /* Do not build the float API */
-#define DISABLE_FLOAT_API 1
+/* #undef DISABLE_FLOAT_API */
 
 /* Disable bitstream fixes from RFC 8251 */
 /* #undef DISABLE_UPDATE_DRAFT */
