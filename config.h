@@ -38,7 +38,9 @@
 #define HAVE_ALLOCA_H 1
 
 /* NE10 library is installed on host. Make sure it is on target! */
-/* #undef HAVE_ARM_NE10 */
+#ifdef CONFIG_LIB_NE10
+#define HAVE_ARM_NE10 1
+#endif
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
@@ -82,6 +84,8 @@
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #define LT_OBJDIR ".libs/"
 
+#ifdef CONFIG_ARCH_ARM
+
 /* Make use of ARM asm optimization */
 #define OPUS_ARM_ASM 1
 
@@ -95,7 +99,9 @@
 #define OPUS_ARM_INLINE_MEDIA 1
 
 /* Use ARM NEON inline asm optimizations */
-/* #undef OPUS_ARM_INLINE_NEON */
+#ifdef CONFIG_ARM_HAVE_NEON
+#define OPUS_ARM_INLINE_NEON 1
+#endif
 
 /* Define if assembler supports EDSP instructions */
 /* #undef OPUS_ARM_MAY_HAVE_EDSP */
@@ -104,13 +110,19 @@
 #define OPUS_ARM_MAY_HAVE_MEDIA 1
 
 /* Define if compiler supports NEON instructions */
-/* #undef OPUS_ARM_MAY_HAVE_NEON */
+#ifdef CONFIG_ARM_HAVE_NEON
+#define OPUS_ARM_MAY_HAVE_NEON 1
+#endif
 
 /* Compiler supports ARMv7/Aarch64 Neon Intrinsics */
-/* #undef OPUS_ARM_MAY_HAVE_NEON_INTR */
+#ifdef CONFIG_ARM_HAVE_NEON
+#define OPUS_ARM_MAY_HAVE_NEON_INTR 1
+#endif
 
 /* Define if binary requires Aarch64 Neon Intrinsics */
-/* #undef OPUS_ARM_PRESUME_AARCH64_NEON_INTR */
+#ifdef CONFIG_ARM_HAVE_NEON
+#define OPUS_ARM_PRESUME_AARCH64_NEON_INTR 1
+#endif
 
 /* Define if binary requires EDSP instruction support */
 /* #undef OPUS_ARM_PRESUME_EDSP */
@@ -119,10 +131,16 @@
 #define OPUS_ARM_PRESUME_MEDIA 1
 
 /* Define if binary requires NEON instruction support */
-/* #undef OPUS_ARM_PRESUME_NEON */
+#ifdef CONFIG_ARM_HAVE_NEON
+#define OPUS_ARM_PRESUME_NEON 1
+#endif
 
 /* Define if binary requires NEON intrinsics support */
-/* #undef OPUS_ARM_PRESUME_NEON_INTR */
+#ifdef CONFIG_ARM_HAVE_NEON
+#define OPUS_ARM_PRESUME_NEON_INTR 1
+#endif
+
+#endif /* CONFIG_ARCH_ARM */
 
 /* This is a build of OPUS */
 #define OPUS_BUILD /**/
@@ -133,11 +151,13 @@
 /* Use run-time CPU capabilities detection */
 /* #undef OPUS_HAVE_RTCD */
 
+#ifdef CONFIG_ARCH_SIM
+
 /* Compiler supports X86 AVX Intrinsics */
-/* #undef OPUS_X86_MAY_HAVE_AVX */
+#define OPUS_X86_MAY_HAVE_AVX 1
 
 /* Compiler supports X86 SSE Intrinsics */
-/* #undef OPUS_X86_MAY_HAVE_SSE */
+#define OPUS_X86_MAY_HAVE_SSE 1
 
 /* Compiler supports X86 SSE2 Intrinsics */
 /* #undef OPUS_X86_MAY_HAVE_SSE2 */
@@ -146,16 +166,18 @@
 /* #undef OPUS_X86_MAY_HAVE_SSE4_1 */
 
 /* Define if binary requires AVX intrinsics support */
-/* #undef OPUS_X86_PRESUME_AVX */
+#define OPUS_X86_PRESUME_AVX 1
 
 /* Define if binary requires SSE intrinsics support */
-/* #undef OPUS_X86_PRESUME_SSE */
+#define OPUS_X86_PRESUME_SSE 1
 
 /* Define if binary requires SSE2 intrinsics support */
 /* #undef OPUS_X86_PRESUME_SSE2 */
 
 /* Define if binary requires SSE4.1 intrinsics support */
 /* #undef OPUS_X86_PRESUME_SSE4_1 */
+
+#endif /* CONFIG_ARCH_SIM */
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT "opus@xiph.org"

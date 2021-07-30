@@ -22,6 +22,7 @@ install-sh
 *.exe
 *.la
 *-gnu.S
+!celt/arm/armopts-gnu.S
 testcelt
 libtool
 ltmain.sh
