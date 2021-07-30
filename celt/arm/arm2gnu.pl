@@ -83,8 +83,8 @@ while (<>) {
     s/\{FALSE\}/0/g;
     s/\{TRUE\}/1/g;
     s/\{(\w\w\w\w+)\}/$1/g;
-    s/\bINCLUDE[ \t]*([^ \t\n]+)/.include \"$1\"/;
-    s/\bGET[ \t]*([^ \t\n]+)/.include \"${ my $x=$1; $x =~ s|\.s|-gnu.S|; \$x }\"/;
+    s/\bINCLUDE[ \t]*([^ \t\n]+)/#include \"$1\"/;
+    s/\bGET[ \t]*([^ \t\n]+)/#include \"${ my $x=$1; $x =~ s|\.s|-gnu.S|; \$x }\"/;
     s/\bIMPORT\b/.extern/;
     s/\bEXPORT\b\s*/.global $symprefix/;
     s/^(\s+)\[/$1IF/;
@@ -142,7 +142,7 @@ while (<>) {
             # won't match the original source file (we could use the .line
             # directive, which is documented to be obsolete, but then gdb will
             # show the wrong line in the translated source file).
-            s/$/;   .arch armv7-a\n   .fpu neon\n   .object_arch armv4t/ unless ($apple);
+            # s/$/;   .arch armv7-a\n   .fpu neon\n   .object_arch armv4t/ unless ($apple);
         }
     }
 
