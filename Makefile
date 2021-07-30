@@ -16,18 +16,32 @@
 
 include $(APPDIR)/Make.defs
 
-CSRCS  = $(wildcard celt/*.c)
-CSRCS += $(wildcard silk/*.c)
-CSRCS += $(wildcard silk/fixed/*.c)
-CSRCS += $(wildcard src/*.c)
+include silk_sources.mk
+include celt_sources.mk
+include opus_sources.mk
 
-CSRCS += silk/arm/arm_silk_map.c
-CSRCS += celt/arm/armcpu.c celt/arm/arm_celt_map.c
+CSRCS += $(OPUS_SOURCES)
+CSRCS += $(OPUS_SOURCES_FLOAT) # FLOAT API required
+CSRCS += $(SILK_SOURCES)
+CSRCS += $(SILK_SOURCES_FIXED)
+CSRCS += $(CELT_SOURCES)
 
-DEMO  := src/opus_compare.c src/repacketizer_demo.c
-DEMO  += src/opus_demo.c celt/opus_custom_demo.c
+ifeq ($(CONFIG_ARCH_SIM),y)
+  CSRCS += $(CELT_SOURCES_SSE)
+endif
 
-CSRCS := $(filter-out $(DEMO), $(CSRCS))
+ifeq ($(CONFIG_ARCH_ARM),y)
+  CSRCS += $(CELT_SOURCES_ARM)
+  ASRCS += celt/arm/celt_pitch_xcorr_arm-gnu.S
+ifeq ($(CONFIG_ARM_HAVE_NEON),y)
+  CSRCS += $(SILK_SOURCES_ARM_NEON_INTR)
+  CSRCS += $(SILK_SOURCES_FIXED_ARM_NEON_INTR)
+  CSRCS += $(CELT_SOURCES_ARM_NEON_INTR)
+endif
+ifeq ($(CONFIG_LIB_NE10),y)
+  CSRCS += $(CELT_SOURCES_ARM_NE10)
+endif
+endif
 
 MODULE    = $(CONFIG_LIB_OPUS)
 PRIORITY  = $(CONFIG_LIB_OPUS_PRIORITY)
@@ -45,10 +59,28 @@ ifneq ($(CONFIG_LIB_OPUS_ENCODE_TEST),)
 endif
 
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" include/}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" celt/}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" silk/}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" silk/fixed/}
-CFLAGS += -DHAVE_CONFIG_H -DEMBEDDED_ARM=1
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" include}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" celt}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" silk}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" silk/fixed}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/Ne10/inc}
+CFLAGS += -DHAVE_CONFIG_H
+
+ifeq ($(CONFIG_ARCH_ARM),y)
+CFLAGS += -DEMBEDDED_ARM=1
+else
+CFLAGS += -DEMBEDDED_ARM=0
+CFLAGS += -D__OPTIMIZE__
+endif
+
+celt/arm/celt_pitch_xcorr_arm-gnu.S:
+ifeq ($(CONFIG_ARCH_ARM),y)
+	./celt/arm/arm2gnu.pl < celt/arm/celt_pitch_xcorr_arm.s > celt/arm/celt_pitch_xcorr_arm-gnu.S
+endif
+
+context:: celt/arm/celt_pitch_xcorr_arm-gnu.S
+
+clean::
+	$(call DELFILE, celt/arm/celt_pitch_xcorr_arm-gnu.S)
 
 include $(APPDIR)/Application.mk
