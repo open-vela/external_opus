@@ -99,7 +99,7 @@
 #define OPUS_ARM_INLINE_MEDIA 1
 
 /* Use ARM NEON inline asm optimizations */
-#ifdef CONFIG_ARM_HAVE_NEON
+#ifdef CONFIG_ARM_NEON
 #define OPUS_ARM_INLINE_NEON 1
 #endif
 
@@ -110,18 +110,13 @@
 #define OPUS_ARM_MAY_HAVE_MEDIA 1
 
 /* Define if compiler supports NEON instructions */
-#ifdef CONFIG_ARM_HAVE_NEON
+#ifdef CONFIG_ARM_NEON
 #define OPUS_ARM_MAY_HAVE_NEON 1
 #endif
 
 /* Compiler supports ARMv7/Aarch64 Neon Intrinsics */
-#ifdef CONFIG_ARM_HAVE_NEON
+#ifdef CONFIG_ARM_NEON
 #define OPUS_ARM_MAY_HAVE_NEON_INTR 1
-#endif
-
-/* Define if binary requires Aarch64 Neon Intrinsics */
-#ifdef CONFIG_ARM_HAVE_NEON
-#define OPUS_ARM_PRESUME_AARCH64_NEON_INTR 1
 #endif
 
 /* Define if binary requires EDSP instruction support */
@@ -131,16 +126,54 @@
 #define OPUS_ARM_PRESUME_MEDIA 1
 
 /* Define if binary requires NEON instruction support */
-#ifdef CONFIG_ARM_HAVE_NEON
+#ifdef CONFIG_ARM_NEON
 #define OPUS_ARM_PRESUME_NEON 1
 #endif
 
 /* Define if binary requires NEON intrinsics support */
-#ifdef CONFIG_ARM_HAVE_NEON
+#ifdef CONFIG_ARM_NEON
 #define OPUS_ARM_PRESUME_NEON_INTR 1
 #endif
 
 #endif /* CONFIG_ARCH_ARM */
+
+
+#ifdef CONFIG_ARCH_ARM64
+
+/* Make use of ARM asm optimization */
+#define OPUS_ARM_ASM 1
+
+/* Use ARM NEON inline asm optimizations */
+#ifdef CONFIG_ARM64_NEON
+#define OPUS_ARM_INLINE_NEON 1
+#endif
+
+/* Define if compiler supports NEON instructions */
+#ifdef CONFIG_ARM64_NEON
+#define OPUS_ARM_MAY_HAVE_NEON 1
+#endif
+
+/* Compiler supports ARMv7/Aarch64 Neon Intrinsics */
+#ifdef CONFIG_ARM64_NEON
+#define OPUS_ARM_MAY_HAVE_NEON_INTR 1
+#endif
+
+/* Define if binary requires Aarch64 Neon Intrinsics */
+#ifdef CONFIG_ARM64_NEON
+#define OPUS_ARM_PRESUME_AARCH64_NEON_INTR 1
+#endif
+
+/* Define if binary requires NEON instruction support */
+#ifdef CONFIG_ARM64_NEON
+#define OPUS_ARM_PRESUME_NEON 1
+#endif
+
+/* Define if binary requires NEON intrinsics support */
+#ifdef CONFIG_ARM64_NEON
+#define OPUS_ARM_PRESUME_NEON_INTR 1
+#endif
+
+#endif /* CONFIG_ARCH_ARM64 */
 
 /* This is a build of OPUS */
 #define OPUS_BUILD /**/
