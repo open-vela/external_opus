@@ -1,4 +1,5 @@
 Doxyfile
+Makefile
 Makefile.in
 TAGS
 aclocal.m4
@@ -7,6 +8,7 @@ autom4te.cache
 *.kdevses
 compile
 config.guess
+config.h
 config.h.in
 config.log
 config.status
@@ -22,7 +24,6 @@ install-sh
 *.exe
 *.la
 *-gnu.S
-!celt/arm/armopts-gnu.S
 testcelt
 libtool
 ltmain.sh
@@ -87,6 +88,3 @@ src/x64
 .vs/
 .vscode/
 CMakeSettings.json
-.built
-.depend
-Make.dep
