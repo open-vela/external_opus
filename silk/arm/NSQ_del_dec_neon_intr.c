@@ -410,7 +410,7 @@ void silk_NSQ_del_dec_neon(
         copy_winner_state( psDelDec, decisionDelay, smpl_buf_idx, Winner_ind, Gain_Q10, 8, pulses, pxq, NSQ );
 
         t_s32x4 = vdupq_n_s32( 0 ); /* initialization */
-        for( i = 0; i < ( NSQ_LPC_BUF_LENGTH - 3 ); i += 4 ) {
+        for( i = 0; i < NSQ_LPC_BUF_LENGTH; i += 4 ) {
             t_s32x4 = vld1q_lane_s32( &psDelDec->sLPC_Q14[ i + 0 ][ Winner_ind ], t_s32x4, 0 );
             t_s32x4 = vld1q_lane_s32( &psDelDec->sLPC_Q14[ i + 1 ][ Winner_ind ], t_s32x4, 1 );
             t_s32x4 = vld1q_lane_s32( &psDelDec->sLPC_Q14[ i + 2 ][ Winner_ind ], t_s32x4, 2 );
