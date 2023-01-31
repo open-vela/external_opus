@@ -592,7 +592,7 @@ static OPUS_INLINE void silk_noise_shape_quantizer_del_dec_neon(
     pred_lag_ptr = &sLTP_Q15[ NSQ->sLTP_buf_idx - lag + LTP_ORDER / 2 ];
     Gain_Q10     = silk_RSHIFT( Gain_Q16, 6 );
 
-    for( i = 0; i < ( MAX_SHAPE_LPC_ORDER - 7 ); i += 8 ) {
+    for( i = 0; i < MAX_SHAPE_LPC_ORDER; i += 8 ) {
       const int16x8_t t_s16x8 = vld1q_s16( AR_shp_Q13 +  i );
       vst1q_s32( AR_shp_Q28 + i + 0, vshll_n_s16( vget_low_s16(  t_s16x8 ), 15 ) );
       vst1q_s32( AR_shp_Q28 + i + 4, vshll_n_s16( vget_high_s16( t_s16x8 ), 15 ) );
