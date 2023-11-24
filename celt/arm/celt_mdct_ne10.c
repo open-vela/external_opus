@@ -36,6 +36,7 @@
 #endif
 #endif
 
+#include <string.h>
 #include "kiss_fft.h"
 #include "_kiss_fft_guts.h"
 #include "mdct.h"
@@ -68,6 +69,7 @@ void clt_mdct_forward_neon(const mdct_lookup *l,
 
    ALLOC(f, N2, kiss_fft_scalar);
    ALLOC(f2, N4, kiss_fft_cpx);
+   memset(f2, 0, sizeof(kiss_fft_cpx));
 
    /* Consider the input to be composed of four blocks: [a, b, c, d] */
    /* Window, shuffle, fold */
@@ -178,6 +180,7 @@ void clt_mdct_backward_neon(const mdct_lookup *l,
    N4 = N>>2;
 
    ALLOC(f, N2, kiss_fft_scalar);
+   memset(f, 0, sizeof(kiss_fft_scalar));
 
    /* Pre-rotate */
    {
