@@ -633,7 +633,7 @@ int run_test1(int no_fuzz)
    return 0;
 }
 
-void print_usage(char* _argv[])
+static void print_usage(char* _argv[])
 {
    fprintf(stderr,"Usage: %s [<seed>] [-fuzz <num_encoders> <num_settings_per_encoder>]\n",_argv[0]);
 }

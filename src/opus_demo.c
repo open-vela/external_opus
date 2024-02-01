@@ -42,7 +42,7 @@
 
 #define MAX_PACKET 1500
 
-void print_usage( char* argv[] )
+static void print_usage( char* argv[] )
 {
     fprintf(stderr, "Usage: %s [-e] <application> <sampling rate (Hz)> <channels (1/2)> "
         "<bits per second>  [options] <input> <output>\n", argv[0]);
