@@ -175,9 +175,9 @@ extern "C" {
 
 /* Macros to trigger compilation errors when the wrong types are provided to a CTL */
 #define __opus_check_int(x) (((void)((x) == (opus_int32)0)), (opus_int32)(x))
-#define __opus_check_int_ptr(ptr) ((ptr) + ((ptr) - (opus_int32*)(ptr)))
-#define __opus_check_uint_ptr(ptr) ((ptr) + ((ptr) - (opus_uint32*)(ptr)))
-#define __opus_check_val16_ptr(ptr) ((ptr) + ((ptr) - (opus_val16*)(ptr)))
+#define __opus_check_int_ptr(ptr) ((opus_int32 *)(ptr))
+#define __opus_check_uint_ptr(ptr) ((opus_uint32 *)(ptr))
+#define __opus_check_val16_ptr(ptr) ((opus_val16 *)(ptr))
 /** @endcond */
 
 /** @defgroup opus_ctlvalues Pre-defined values for CTL interface
